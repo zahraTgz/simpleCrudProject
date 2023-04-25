@@ -4,7 +4,7 @@
 #server port
 server.port=8081
 
-# Requirements
+## Requirements
 For building and running the application you need:
 
 * JDK 17
