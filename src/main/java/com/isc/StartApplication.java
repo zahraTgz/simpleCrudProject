@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @PropertySource("classpath:dec_fa.properties")
 @SpringBootApplication()
-@OpenAPIDefinition(info = @Info(title = "Crud API", version = "1.0", description = "4 Simple Opration"))
+@OpenAPIDefinition(info = @Info(title = "Crud API", version = "1.0", description = "Simple SpringBoot App"))
 public class StartApplication {
 
     public static void main(String[] args) {
