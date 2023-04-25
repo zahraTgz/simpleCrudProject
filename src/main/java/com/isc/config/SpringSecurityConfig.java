@@ -33,21 +33,19 @@ public class SpringSecurityConfig {
         return new InMemoryUserDetailsManager(user, admin);
     }
 
+
     @Bean
     public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
-
 
         httpSecurity
                 .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(new AntPathRequestMatcher("/swagger-ui.*"),
-                                new AntPathRequestMatcher("/h2-console/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/swagger-ui.*"))
+                        .permitAll()
                         .anyRequest()
                         .authenticated())
                 .formLogin();
 
-        httpSecurity.csrf()
-                .ignoringRequestMatchers("/h2-console/**");
         httpSecurity.headers()
                 .frameOptions()
                 .sameOrigin();

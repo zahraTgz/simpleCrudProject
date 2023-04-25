@@ -49,6 +49,7 @@ public class AccountService {
                 });
         existingAccount.setName(account.getName());
         existingAccount.setEmail(account.getEmail());
+        existingAccount.setAge(account.getAge());
         return accountRepository.save(existingAccount);
     }
 

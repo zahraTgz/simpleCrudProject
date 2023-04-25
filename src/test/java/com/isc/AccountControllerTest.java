@@ -15,6 +15,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -70,9 +71,8 @@ class AccountControllerTest {
                                   "age": 32
                                 }
                                 """))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-        Account serviceById = accountService.findById(mockUpdateAccount.getId());
-        Assertions.assertEquals(serviceById.getAge(), mockUpdateAccount.getAge());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.age", Matchers.is(32)));
     }
 
 }
