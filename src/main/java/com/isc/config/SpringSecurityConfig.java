@@ -1,15 +1,15 @@
 package com.isc.config;
 
-import com.isc.entity.AppUserRole;
+import com.isc.service.CustomAuthenticationProvider;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -17,22 +17,22 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
 
-        UserDetails user = User.withUsername("user")
-                .password(passwordEncoder.encode("user"))
-                .roles(AppUserRole.USER.name())
-                .build();
+    @Qualifier("MyUserDetailsService")
+    UserDetailsService memberDetailsService;
 
-        UserDetails admin = User.withUsername("admin")
-                .password(passwordEncoder.encode("admin"))
-                .roles(AppUserRole.USER.name(), AppUserRole.ADMIN.name())
-                .build();
+    private final CustomAuthenticationProvider customAuthenticationProvider;
 
-        return new InMemoryUserDetailsManager(user, admin);
+    public SpringSecurityConfig(CustomAuthenticationProvider customAuthenticationProvider) {
+        this.customAuthenticationProvider = customAuthenticationProvider;
     }
 
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .authenticationProvider(customAuthenticationProvider)
+                .userDetailsService(memberDetailsService)
+                .passwordEncoder(passwordEncoder());
+    }
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
@@ -56,5 +56,6 @@ public class SpringSecurityConfig {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
 }
