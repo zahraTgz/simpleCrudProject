@@ -1,10 +1,10 @@
 package com.isc.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,22 +14,26 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppUser implements UserDetails {
+public class AppUser implements UserDetails { // or just extend from User class as package ..security.core.userdetails
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
     private String username;
 
     private String password;
 
+    private String email;
+
+    private String firstName;
+
+    private String lastName;
+    @Enumerated(EnumType.STRING)
     private AppUserRole role;
 
     @Override
