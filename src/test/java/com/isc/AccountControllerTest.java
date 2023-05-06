@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
@@ -39,8 +40,8 @@ class AccountControllerTest {
         List<Account> mockAccounts = new ArrayList<>();
         mockAccounts.add(Account.builder().id(1L).name("John").email("john@example.com").age(21).build());
         mockAccounts.add(Account.builder().id(2L).name("Jane").email("jane@example.com").age(20).build());
-        Mockito.when(accountService.getAccount()).thenReturn(mockAccounts);
-
+        Mockito.when(accountService.getAccount(0, 5)).thenReturn(new PageImpl<>(mockAccounts));
+        //todo: must check again
         mockMvc.perform(MockMvcRequestBuilders.get("/account"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size()", Matchers.is(2)))

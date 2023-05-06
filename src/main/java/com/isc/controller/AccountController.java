@@ -3,6 +3,7 @@ package com.isc.controller;
 import com.isc.entity.Account;
 import com.isc.service.AccountService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,9 +15,9 @@ public class AccountController {
 
     private final AccountService accountService;
 
-    @GetMapping
-    public List<Account> getAccount() {
-        return accountService.getAccount();
+    @GetMapping("/{page}/{size}")
+    public Page<Account> getAccount(@PathVariable int page, @PathVariable int size) {
+        return accountService.getAccount(page,size);
     }
 
     @GetMapping("/{id}")

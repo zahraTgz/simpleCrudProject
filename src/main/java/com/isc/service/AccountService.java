@@ -6,9 +6,9 @@ import com.isc.repository.AccountRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class AccountService {
@@ -23,8 +23,9 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public List<Account> getAccount() {
-        return accountRepository.findAll();
+    public Page<Account> getAccount(int page, int size) {
+        PageRequest pr = PageRequest.of(page, size);
+        return accountRepository.findAll(pr);
     }
 
     public Account insertAccount(Account account) {

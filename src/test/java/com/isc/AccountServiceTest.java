@@ -31,7 +31,7 @@ class AccountServiceTest {
         mockAccounts.add(Account.builder().id(2L).name("Jane").email("jane@example.com").age(60).build());
         Mockito.when(accountRepository.findAll()).thenReturn(mockAccounts);
 
-        List<Account> result = accountService.getAccount();
+        List<Account> result = accountService.getAccount(0,5).getContent();//todo: must check again
         Assertions.assertEquals(mockAccounts, result);
     }
 
