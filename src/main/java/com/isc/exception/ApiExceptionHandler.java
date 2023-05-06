@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -36,6 +37,14 @@ public class ApiExceptionHandler {
         logger.error("Forbidden due to:" + ex.getMessage());
         return new ErrorMessage(HttpStatus.FORBIDDEN.value(),
                 ex.getMessage(), "Url is Forbidden ");
+    }
+
+    @ExceptionHandler(value = BadCredentialsException.class)
+    @ResponseStatus(value = HttpStatus.FORBIDDEN)
+    public ErrorMessage badCredentialsException(BadCredentialsException ex) {
+        logger.error("BadCredentialsException due to:" + ex.getMessage());
+        return new ErrorMessage(HttpStatus.FORBIDDEN.value(),
+                ex.getMessage(), "");
     }
 
 }

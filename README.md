@@ -11,8 +11,18 @@ For building and running the application you need:
 * Maven
 * SpringBoot 3.0.5
 
-### To change username/password
-  just open file "SetupData" at directory: com.isc.config
+### To create a new  user
+  you can use postman by url:  http://localhost:8081/auth/register
+  and body: 
+  {
+  "username":"admin" ,
+  "password":"admin",
+  "email":"z@isc.com",
+  "firstName":"zahra",
+  "lastName":"tgz",
+  "role": "ADMIN"
+  }
+  so generate a token.
   
 ### To view Log file of project
  a file by name crudApp.log created.you can change level  or ...  at application.properties file.
