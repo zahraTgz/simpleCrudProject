@@ -24,7 +24,7 @@ public class SpringSecurityConfig {
         httpSecurity
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**", "/swagger-ui.*")//add some white list
+                .requestMatchers("/auth/**", "/swagger-ui/**","/api-docs/**")//add some white list
                 .permitAll()
                 .anyRequest()
                 .authenticated()
