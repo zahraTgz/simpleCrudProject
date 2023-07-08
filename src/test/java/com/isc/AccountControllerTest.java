@@ -54,7 +54,7 @@ class AccountControllerTest {
     void updateAccount() throws Exception {
         Account mockUpdateAccount = Account.builder().id(1L).name("John").email("john@example.com").age(32).build();
 
-        Mockito.when(accountService.findById(mockUpdateAccount.getId())).thenReturn(mockUpdateAccount);
+        Mockito.when(accountService.getAccountById(mockUpdateAccount.getId())).thenReturn(mockUpdateAccount);
 
         Mockito.when(accountService.updateAccount(anyLong(), any(Account.class)))
                 .thenReturn(mockUpdateAccount);

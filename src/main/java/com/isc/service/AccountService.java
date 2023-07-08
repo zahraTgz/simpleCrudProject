@@ -28,13 +28,13 @@ public class AccountService {
         return accountRepository.findAll(pr);
     }
 
-    public Account insertAccount(Account account) {
+    public void insertAccount(Account account) {
 
         logger.info("account with Name{} created.", account.getName());
-        return accountRepository.save(account);
+        accountRepository.save(account);
     }
 
-    public Account findById(Long id) {
+    public Account getAccountById(Long id) {
         return accountRepository.findById(id)
                 .orElseThrow(() -> {
                     logger.error("Account with ID {} not found", id);
