@@ -4,6 +4,7 @@ import com.isc.entity.Account;
 import com.isc.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -18,26 +19,26 @@ public class AccountController {
     @GetMapping("/{page}/{size}")
     @Secured("ROLE_USER")
     @PreAuthorize("hasRole('USER')")
-    public Page<Account> getAccount(@PathVariable int page, @PathVariable int size) {
-        return accountService.getAccount(page, size);
+    public ResponseEntity<Page<Account>> getAccount(@PathVariable int page, @PathVariable int size) {
+        return ResponseEntity.ok(accountService.getAccount(page, size));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER')")
-    public Account getAccountById(@PathVariable Long id) {
-        return accountService.getAccountById(id);
+    public ResponseEntity<Account> getAccountById(@PathVariable Long id) {
+        return ResponseEntity.ok(accountService.getAccountById(id));
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public void insertAccount(@RequestBody Account account) {
-        accountService.insertAccount(account);
+    public ResponseEntity<Long> insertAccount(@RequestBody Account account) {
+        return ResponseEntity.ok(accountService.insertAccount(account));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Account updateAccount(@PathVariable Long id, @RequestBody Account account) {
-        return accountService.updateAccount(id, account);
+    public ResponseEntity<Account> updateAccount(@PathVariable Long id, @RequestBody Account account) {
+        return ResponseEntity.ok(accountService.updateAccount(id, account));
     }
 
     @DeleteMapping("/{id}")

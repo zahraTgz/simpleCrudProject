@@ -12,7 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -32,7 +31,7 @@ class AccountServiceTest {
         mockAccounts.add(Account.builder().id(2L).name("Jane").email("jane@example.com").age(60).build());
         Mockito.when(accountRepository.findAll()).thenReturn(mockAccounts);
 
-        List<Account> result = accountService.getAccount(0,5).getContent();//todo: must check again
+        List<Account> result = accountService.getAccount(0, 5).getContent();//todo: must check again
         Assertions.assertEquals(mockAccounts, result);
     }
 
@@ -40,10 +39,8 @@ class AccountServiceTest {
     void insert() {
         Account account = Account.builder().id(1L).name("John").email("john@example.com").age(18).build();
         Mockito.when(accountRepository.save(any(Account.class))).thenReturn(account);
-        accountService.insertAccount(account);
-        Mockito.when(accountRepository.findById(any(Long.class))).thenReturn(Optional.of(account));
-        accountService.getAccountById(account.getId());
-        Assertions.assertNotNull(account.getName());
+        Long insertAccount = accountService.insertAccount(account);
+        Assertions.assertNotNull(insertAccount);
     }
 
 

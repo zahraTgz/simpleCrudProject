@@ -1,6 +1,5 @@
 package com.isc.service;
 
-import com.isc.entity.AppUser;
 import com.isc.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,10 +18,7 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
 
-        AppUser appUser = userRepository.findByUsername(username);
-        if (appUser == null) {
-            throw new UsernameNotFoundException("UsernameNotFoundException:" + username);
-        }
-        return appUser;
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("UsernameNotFoundException:" + username));
     }
 }

@@ -13,8 +13,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {//can be Interface
@@ -43,10 +41,9 @@ public class AuthenticationService {//can be Interface
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 
-        AppUser byUsername = userRepository.findByUsername(authenticationRequest.getUsername());
-        if (Objects.isNull(byUsername)) {
-            throw new UsernameNotFoundException("UsernameNotFoundException:" + authenticationRequest.getUsername());
-        }
+        AppUser byUsername = userRepository.findByUsername(authenticationRequest.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("UsernameNotFoundException:" + authenticationRequest.getUsername()));
+
         String token = jwtService.generateToken(byUsername);
         return AuthenticationResponse.builder().token(token).build();
     }
