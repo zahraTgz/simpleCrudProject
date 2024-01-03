@@ -1,12 +1,16 @@
 package com.isc.service;
 
+import com.isc.dto.AccountSearchCriteriaDto;
 import com.isc.entity.Account;
 import com.isc.exception.NotFoundException;
 import com.isc.repository.AccountRepository;
+import com.isc.service.specification.AccountSpecifications;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -56,5 +60,10 @@ public class AccountService {
     public void deleteAccount(Long id) {
         log.info("account with Id {} deleted", id);
         accountRepository.deleteById(id);
+    }
+
+    public Page<Account> searchAccount(AccountSearchCriteriaDto searchCriteria, Pageable pageable) {
+        Specification<Account> spec = AccountSpecifications.searchUsers(searchCriteria);
+        return accountRepository.findAll(spec, pageable);
     }
 }

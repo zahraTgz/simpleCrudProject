@@ -21,10 +21,10 @@ import org.springframework.context.annotation.PropertySource;
         version = "1.0",
         description = "Simple SpringBoot App"),
         security = {@SecurityRequirement(name = "Authorization")})
-public class StartApplication {
+public class SimpleCrudApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(StartApplication.class, args);
+        SpringApplication.run(SimpleCrudApplication.class, args);
     }
 
 }

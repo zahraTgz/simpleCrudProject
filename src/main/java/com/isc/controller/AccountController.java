@@ -1,9 +1,11 @@
 package com.isc.controller;
 
+import com.isc.dto.AccountSearchCriteriaDto;
 import com.isc.entity.Account;
 import com.isc.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,6 +47,11 @@ public class AccountController {
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteAccount(@PathVariable Long id) {
         accountService.deleteAccount(id);
+    }
+
+    @PostMapping("/searchOnAccount") //sample in url :page=0&size=10&sort=name,asc
+    public ResponseEntity<Page<Account>> searchAccount(@RequestBody AccountSearchCriteriaDto searchCriteriaDto, Pageable pageable) {
+        return ResponseEntity.ok(accountService.searchAccount(searchCriteriaDto, pageable));
     }
 
 }
