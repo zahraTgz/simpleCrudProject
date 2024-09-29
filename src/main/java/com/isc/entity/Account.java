@@ -1,5 +1,6 @@
 package com.isc.entity;
 
+import com.isc.validator.UniqueEmailValidator;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +24,7 @@ public class Account {
 
     private String name;
 
+    @UniqueEmailValidator(message = "Email must be unique")
     private String email;
 
     private int age;

@@ -3,7 +3,9 @@ package com.isc.controller;
 import com.isc.dto.AccountSearchCriteriaDto;
 import com.isc.entity.Account;
 import com.isc.service.AccountService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -33,13 +35,13 @@ public class AccountController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Long> insertAccount(@RequestBody Account account) {
+    public ResponseEntity<Long> insertAccount(@Valid @RequestBody Account account) {
         return ResponseEntity.ok(accountService.insertAccount(account));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Account> updateAccount(@PathVariable Long id, @RequestBody Account account) {
+    public ResponseEntity<Account> updateAccount(@PathVariable Long id,@Valid @RequestBody Account account) {
         return ResponseEntity.ok(accountService.updateAccount(id, account));
     }
 
